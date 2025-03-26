@@ -5,12 +5,15 @@ import { navlinks } from "../constants";
 import CustomBtn from "./CustomBtn";
 import api from "../API/api";
 import { useMainContext } from "../context/mainContext";
+import { HoveredLink, Menu, MenuItem, ProductItem } from "./ui/navbar-menu";
+import { cn } from "../lib/utils";
 
-function Navbar() {
+function Navbar({ className }) {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("dashboard");
   const [searchQuery, setSearchQuery] = useState("");
   const [toggleDrawer, setToggleDrawer] = useState(false);
+  const [active, setActive] = useState(null);
   //   const { connect, address } = useStateContext();
   const address = localStorage.getItem("access_token");
   const { updateSearchResults } = useMainContext();
@@ -53,6 +56,60 @@ function Navbar() {
             className="w-[15px] h-[15px] object-contain"
           />
         </div>
+      </div>
+
+      <div className={cn(" inset-x-0 mx-auto z-50", className)}>
+        <Menu setActive={setActive}>
+          <MenuItem setActive={setActive} active={active} item="Services">
+            <div className="flex flex-col space-y-4 text-sm">
+              <HoveredLink href="/web-dev">
+                Inverstment Document Preperation
+              </HoveredLink>
+              <HoveredLink href="/interface-design">
+                Interface Design
+              </HoveredLink>
+              <HoveredLink href="/seo">
+                Connecting You with Investors
+              </HoveredLink>
+            </div>
+          </MenuItem>
+          <MenuItem setActive={setActive} active={active} item="Products">
+            <div className="  text-sm grid grid-cols-2 gap-10 p-4">
+              <ProductItem
+                title="Algochurn"
+                href="https://algochurn.com"
+                src="https://assets.aceternity.com/demos/algochurn.webp"
+                description="Prepare for tech interviews like never before."
+              />
+              <ProductItem
+                title="Tailwind Master Kit"
+                href="https://tailwindmasterkit.com"
+                src="https://assets.aceternity.com/demos/tailwindmasterkit.webp"
+                description="Production ready Tailwind css components for your next project"
+              />
+              <ProductItem
+                title="Moonbeam"
+                href="https://gomoonbeam.com"
+                src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.51.31%E2%80%AFPM.png"
+                description="Never write from scratch again. Go from idea to blog in minutes."
+              />
+              <ProductItem
+                title="Rogue"
+                href="https://userogue.com"
+                src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.47.07%E2%80%AFPM.png"
+                description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
+              />
+            </div>
+          </MenuItem>
+          <MenuItem setActive={setActive} active={active} item="Pricing">
+            <div className="flex flex-col space-y-4 text-sm">
+              <HoveredLink href="/hobby">Hobby</HoveredLink>
+              <HoveredLink href="/individual">Individual</HoveredLink>
+              <HoveredLink href="/team">Team</HoveredLink>
+              <HoveredLink href="/enterprise">Enterprise</HoveredLink>
+            </div>
+          </MenuItem>
+        </Menu>
       </div>
 
       <div className="sm:flex hidden flex-row justify-end gap-4">

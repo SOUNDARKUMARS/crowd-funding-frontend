@@ -1,7 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HeroUIProvider } from "@heroui/react";
-import { Home, CreateCampaign, CampaignDetails, Profile } from "./pages";
+import {
+  Home,
+  CreateCampaign,
+  CampaignDetails,
+  Profile,
+  ViewCreator,
+  Investors,
+} from "./pages";
 import { Sidebar, Navbar } from "./components";
 import { MainProvider } from "./context/mainContext";
 function App() {
@@ -24,6 +31,8 @@ function App() {
                   path="/campaign-details/:id"
                   element={<CampaignDetails />}
                 />
+                <Route path="/view-creator" element={<ViewCreator />} />
+                <Route path="/investors" element={<Investors />} />
               </Routes>
             </div>
           </div>

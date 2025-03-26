@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { HoverEffect } from "../components/ui/card-hover-effect";
 import api from "../API/api";
 import { HeroParallax } from "../components/ui/hero-parallax";
-import { HeroHighlight } from "../components/ui/hero-highlight";
+import { HeroHighlight, Highlight } from "../components/ui/hero-highlight";
 import { useMainContext } from "../context/mainContext";
-import { Tabs } from "../components/ui/tabs";
-
+import { useNavigate } from "react-router-dom";
+import { LinkPreview } from "../components/ui/link-preview";
+import { investor } from "../assets";
+import { Input } from "../components/ui/input";
 function Home() {
+  const navigate = useNavigate();
   const { campaigns, setCampaigns, searchResults, setSearchResults } =
     useMainContext();
 
@@ -87,9 +90,69 @@ function Home() {
         </div>
       )}
 
-      <HeroHighlight />
+      {/* <LabelInputContainer> */}
+      {/* <Label htmlFor="firstname">First name</Label> */}
+      {/* <Input id="firstname" placeholder="Tyler" type="text" /> */}
+      {/* </LabelInputContainer> */}
+
+      <HeroHighlight
+        customContent={
+          <div className="relative z-20 text-center flex flex-col items-center justify-around  h-full">
+            <h1
+              style={{ lineHeight: "60px" }}
+              className="select-none text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6"
+            >
+              <span
+                className="cursor-pointer"
+                onClick={() => navigate("/investors")}
+              >
+                {" "}
+                <Highlight>
+                  <LinkPreview url="/investors" src={investor}>
+                    Connecting Investors
+                  </LinkPreview>
+                </Highlight>
+              </span>{" "}
+              & Empowering Growth.
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-4">
+              Our platform empowers innovators and connects investors,
+              accelerating global growth. Launch your campaign or fund the next
+              big idea with a seamless, fast, and worldwide investment process.
+            </p>
+          </div>
+        }
+      />
+
+      <section className="bg-gradient-to-r from-gray-900 to-gray-800 py-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
+            <div className="bg-gradient-to-br from-gray-700 to-gray-800 shadow-xl rounded-2xl p-6 hover:bg-gray-700 transition duration-300">
+              <h3 className="text-4xl font-bold text-white">Innovate</h3>
+              <p className="text-gray-300 mt-2">
+                Driving innovation through technology
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-gray-700 to-gray-800 shadow-xl rounded-2xl p-6 hover:bg-gray-700 transition duration-300">
+              <h3 className="text-4xl font-bold text-white">Connect</h3>
+              <p className="text-gray-300 mt-2">
+                Connecting startups with investors
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-br from-gray-700 to-gray-800 shadow-xl rounded-2xl p-6 hover:bg-gray-700 transition duration-300">
+              <h3 className="text-4xl font-bold text-white">Grow</h3>
+              <p className="text-gray-300 mt-2">
+                Empowering growth across the globe
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* <HeroParallax products={products} /> */}
-      <p className=" text-3xl text-left font-bold text-white">
+      <p className="font-epilogue text-3xl mt-14 mb-2 text-left font-bold text-white">
         Explore the campagins
       </p>
 
@@ -99,3 +162,17 @@ function Home() {
 }
 
 export default Home;
+
+// const LabelInputContainer = ({
+//   children,
+//   className,
+// }: {
+//   children: React.ReactNode;
+//   className?: string;
+// }) => {
+//   return (
+//     <div className={cn("flex w-full flex-col space-y-2", className)}>
+//       {children}
+//     </div>
+//   );
+// };

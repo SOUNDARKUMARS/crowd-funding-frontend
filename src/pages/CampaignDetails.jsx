@@ -94,7 +94,6 @@ function CampaignDetails() {
             ></div>
           </div>
         </div>
-
         <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
           <CountBox title="Days Left" value={daysLeft(campaign?.deadline)} />
           <CountBox
@@ -112,7 +111,14 @@ function CampaignDetails() {
               Creator
             </h4>
 
-            <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
+            <div
+              onClick={() =>
+                navigate("/view-creator", {
+                  state: { campaign: campaign, user_id: campaign?.creator_id },
+                })
+              }
+              className="mt-[20px] flex flex-row cursor-pointer items-center flex-wrap gap-[14px]"
+            >
               <img
                 // onMouseMove={handleMouseMove}
                 height={50}

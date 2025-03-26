@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .linear-gradient {
   background: linear-gradient(
     179.14deg,

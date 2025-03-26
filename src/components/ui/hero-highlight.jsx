@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import { Tabs } from "./tabs";
 import api from "../../API/api";
 import { useMainContext } from "../../context/mainContext";
+import { LinkPreview } from "./link-preview";
 
-export const HeroHighlight = () => {
+export const HeroHighlight = ({ customContent }) => {
   let mouseX = useMotionValue(0);
   let mouseY = useMotionValue(0);
 
@@ -64,7 +65,7 @@ export const HeroHighlight = () => {
 
   return (
     <div
-      className="group relative flex-col flex h-[20rem] sm:h-[30rem] lg:h-[35rem] w-full items-center justify-around bg-[#13131a]"
+      className="group relative flex-col flex h-[20rem] sm:h-[30rem] lg:h-[22rem] w-full items-center justify-around bg-[#13131a]"
       onMouseMove={handleMouseMove}
     >
       <div
@@ -93,20 +94,13 @@ export const HeroHighlight = () => {
           `,
         }}
       />
-      <div className="relative z-20 text-center">
-        <h1 className="select-none text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6">
-          Fund Your Dreams, <Highlight>Together</Highlight>
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-4">
-          Join thousands of innovators and changemakers who are turning their
-          ideas into reality through the power of community funding.
-        </p>
-      </div>
 
-      <div className="w-full px-4 overflow-x-scroll scrollbar-hide">
+      {customContent}
+
+      {/* <div className="w-full px-4 overflow-x-scroll scrollbar-hide">
         <p className="text-white text-2xl font-bold z-50">Categories</p>
         <Tabs tabs={categories} onCategoryChange={handleCategoryChange} />
-      </div>
+      </div> */}
     </div>
   );
 };

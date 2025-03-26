@@ -37,7 +37,7 @@ export const HoverEffect = ({ items, className, from }) => {
   return (
     <div
       className={cn(
-        "grid grid-cols-1 md:grid-cols-3 cursor-pointer lg:grid-cols-4  py-10",
+        "grid grid-cols-1 md:grid-cols-3 cursor-pointer lg:grid-cols-4 pb-3",
         className
       )}
     >
@@ -49,12 +49,11 @@ export const HoverEffect = ({ items, className, from }) => {
         </div>
       )}
       {items.map((item, idx) => (
-        <div>
+        <div key={item?.link}>
           <div
             onClick={() =>
               navigate(`/campaign-details/${item.id}`, { state: { item } })
             }
-            key={item?.link}
             className="relative group  block p-2 h-full w-full"
             onMouseEnter={() => setHoveredIndex(idx)}
             onMouseLeave={() => setHoveredIndex(null)}

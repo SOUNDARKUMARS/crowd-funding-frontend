@@ -6,7 +6,7 @@ import FormField from "../components/FormField";
 import { DatePicker, Input, Select, SelectItem } from "@heroui/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 
-import { today, getLocalTimeZone } from "@internationalized/date";
+import { today, getLocalTimeZone, parseDate } from "@internationalized/date";
 import axios from "axios";
 import api from "../API/api";
 import Loader from "../components/Loader";
@@ -20,12 +20,24 @@ function CreateCampaign() {
   const [loadingMsg, setLoadingMsg] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState(itemDetails?.img_url || "");
   const [form, setForm] = useState({
-    title: "",
-    description: "",
-    target: "",
+    title: itemDetails?.title || "",
+    description: itemDetails?.description || "",
+    target: itemDetails?.goal_amount || "",
   });
+
+  useEffect(() => {
+    if (itemDetails) {
+      setStartDate(
+        parseDate(new Date(itemDetails?.start_date).toISOString().split("T")[0])
+      );
+      const deadline = itemDetails?.deadline.split("-");
+      setEndDate(
+        parseDate(deadline[0] + "-" + deadline[1] + "-" + deadline[2])
+      ); //"yyyy-mm-dd"
+    }
+  }, [itemDetails]);
 
   const cld = new Cloudinary({ cloud: { cloudName: "dceod41m6" } });
 
@@ -92,6 +104,13 @@ function CreateCampaign() {
   const handleUpdateCampaign = async () => {
     const response = await api.put(`/update-campaign/${itemDetails.id}`, {
       campaign_images: images,
+      title: form.title,
+      description: form.description,
+      target: form.target,
+      deadline: `${endDate.year}-${endDate.month}-${endDate.day}`,
+      start_date: `${startDate.year}-${startDate.month}-${startDate.day}`,
+      thumbnail_img: imageUrl,
+      category_id: selectedCategory,
     });
     console.log(response);
   };
@@ -201,6 +220,11 @@ function CreateCampaign() {
               className="dark"
               variant="bordered"
               size="lg"
+              defaultSelectedKeys={
+                itemDetails?.category_id
+                  ? [itemDetails.category_id.toString()]
+                  : []
+              }
               popoverProps={{
                 classNames: {
                   content: "dark bg-[#13131a] text-white dark:bg-content1",
@@ -208,10 +232,10 @@ function CreateCampaign() {
               }}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <SelectItem
                   className="dark"
-                  key={category.id}
+                  key={category?.id}
                   value={category.id}
                 >
                   {category.name}
@@ -265,7 +289,7 @@ function CreateCampaign() {
           <div className="outline-none bg-transparent font-epilogue text-white text-[14px] placeholder:text-[#4b5264] rounded-[15px] sm:min-w-[300px]">
             <DatePicker
               minValue={today(getLocalTimeZone())}
-              defaultValue={today(getLocalTimeZone()).subtract({ days: 1 })}
+              // defaultValue={parseDate("2024-04-04")}
               popoverProps={{
                 classNames: {
                   content: "dark bg-[#13131a] text-white dark:bg-content1",

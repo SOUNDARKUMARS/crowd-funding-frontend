@@ -15,6 +15,7 @@ import userIcon from "./user.png";
 import menuicon from "./menu.png";
 import leftChevron from "./left-chevron.png";
 import rightChevron from "./right-chevron.png";
+import investor from "./investor.png";
 
 export {
   tagType,
@@ -34,4 +35,5 @@ export {
   menuicon,
   leftChevron,
   rightChevron,
+  investor,
 };
